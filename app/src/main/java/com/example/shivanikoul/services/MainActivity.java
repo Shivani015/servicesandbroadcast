@@ -8,6 +8,7 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
     Button start,pause,stop;
+    String order =null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,14 +22,33 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startService(new Intent(MainActivity.this,MyService.class));
+                Intent intent =new Intent(MainActivity.this,MyService.class);
+                order="pause";
+                intent.putExtra("order",order);
+                start.setText("Resume");
+                startService(intent);
+
+                pause.setEnabled(false);
+                stop.setEnabled(true);
+                start.setEnabled(true);
             }
         });
+
+
         stop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                stopService(new Intent(MainActivity.this,MyService.class));
+                Intent intent =new Intent(MainActivity.this,MyService.class);
+                order="pause";
+                intent.putExtra("order",order);
+
+                startService(intent);
+
+                pause.setEnabled(false);
+                stop.setEnabled(true);
+                start.setEnabled(true);
             }
         });
+
     }
 }
